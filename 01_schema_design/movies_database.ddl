@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS content.genre_film_work
     id           UUID PRIMARY KEY,
     genre_id     UUID NOT NULL
         CONSTRAINT genre_film_work_genre_id_fk
-            REFERENCES content.genre,
+            REFERENCES content.genre ON DELETE CASCADE,
     film_work_id UUID NOT NULL
         CONSTRAINT genre_film_work_film_work_id_fk
-            REFERENCES content.film_work,
+            REFERENCES content.film_work ON DELETE CASCADE,
     created      TIMESTAMP WITH TIME ZONE
 );
 
@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS content.person_film_work
     id           UUID PRIMARY KEY,
     person_id    UUID NOT NULL
         CONSTRAINT person_film_work_person_id_fk
-            REFERENCES content.person,
+            REFERENCES content.person ON DELETE CASCADE,
     film_work_id UUID NOT NULL
         CONSTRAINT person_film_work_film_work_id_fk
-            REFERENCES content.film_work,
+            REFERENCES content.film_work ON DELETE CASCADE,
     role         TEXT NOT NULL,
     created   TIMESTAMP WITH TIME ZONE
 );
