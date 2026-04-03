@@ -6,24 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('movies', '0001_initial'),
+        ("movies", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='filmworkgenre',
-            name='film_work_genre',
+            model_name="filmworkgenre",
+            name="film_work_genre",
         ),
         migrations.RemoveIndex(
-            model_name='personrole',
-            name='film_work_person_role',
+            model_name="personrole",
+            name="film_work_person_role",
         ),
         migrations.AddConstraint(
-            model_name='filmworkgenre',
-            constraint=models.UniqueConstraint(fields=('filmwork_id', 'genre_id'), name='film_work_genre'),
+            model_name="filmworkgenre",
+            constraint=models.UniqueConstraint(fields=("filmwork_id", "genre_id"), name="film_work_genre"),
         ),
         migrations.AddConstraint(
-            model_name='personrole',
-            constraint=models.UniqueConstraint(fields=('filmwork_id', 'person_id', 'role'), name='film_work_person_role'),
+            model_name="personrole",
+            constraint=models.UniqueConstraint(fields=("filmwork_id", "person_id", "role"), name="film_work_person_role"),
         ),
     ]

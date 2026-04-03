@@ -30,7 +30,7 @@ class PersonRoleInline(admin.TabularInline):
 class FilmworkAdmin(admin.ModelAdmin):
     list_filter = ("type",)
     search_fields = ("title", "description", "id")
-    list_display = ("title", "type", "creation_date", "rating")
+    list_display = ("title", "type", "creation_date", "rating", "get_genres")
     fields = (
         "title",
         "type",
@@ -40,6 +40,22 @@ class FilmworkAdmin(admin.ModelAdmin):
         "file_path",
         "rating",
     )
+
+    list_prefetch_related = ("genres",)
+
+    def get_queryset(self, request):
+        queryset = (
+            super()
+            .get_queryset(request)
+            .prefetch_related(*self.list_prefetch_related)
+        )
+        return queryset
+
+    def get_genres(self, obj):
+        return ", ".join([genre.name for genre in obj.genres.all()])
+
+
+
     empty_value_display = "-пусто-"
     inlines = [
         GenreInline,
@@ -47,7 +63,6 @@ class FilmworkAdmin(admin.ModelAdmin):
     ]
     ordering = ("title",)
     list_per_page = ROWS_PER_PAGE
-
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
