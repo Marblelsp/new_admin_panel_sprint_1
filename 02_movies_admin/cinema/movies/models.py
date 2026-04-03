@@ -38,11 +38,6 @@ class Person(TimeIDMixin, models.Model):
 class Genre(TimeIDMixin, models.Model):
     name = models.CharField(_("Название"), max_length=255)
     description = models.TextField(_("Описание"), blank=True, null=True)
-    """В самой бд sqlite в 3-ей части урока в description есть значения null.
-    При миграции возникает ошибка, если не разрешить null значения в моделях.
-    Так же для стандартизации для пустых значений любого типа лучше null использовать, дабы
-    избежать путаницы даже, если придётся хранить 2 типа значений
-    """
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:  # type: ignore
