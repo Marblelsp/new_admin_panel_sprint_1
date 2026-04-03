@@ -38,6 +38,11 @@ class Person(TimeIDMixin, models.Model):
 class Genre(TimeIDMixin, models.Model):
     name = models.CharField(_("Название"), max_length=255)
     description = models.TextField(_("Описание"), blank=True, null=True)
+    """В самой бд sqlite в 3-ей части урока в description есть значения null.
+    При миграции возникает ошибка, если не разрешить null значения в моделях.
+    Так же для стандартизации для пустых значений любого типа лучше null использовать, дабы
+    избежать путаницы даже, если придётся хранить 2 типа значений
+    """
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:  # type: ignore
@@ -65,7 +70,7 @@ class FilmworkGenre(TimeIDMixin, models.Model):
 
     class Meta:  # type: ignore
         indexes = [
-            models.Index(fields=["filmwork_id", "genre_id"], name="film_work_genre"),
+            models.UniqueConstraint(fields=["filmwork_id", "genre_id"], name="film_work_genre"),
         ]
         verbose_name = _("Жанр фильма")
         verbose_name_plural = _("Жанры фильмов")
@@ -105,7 +110,7 @@ class PersonRole(TimeIDMixin, models.Model):
         db_table = '"content"."person_film_work"'
 
         indexes = [
-            models.Index(
+            models.UniqueConstraint(
                 fields=["filmwork_id", "person_id", "role"],
                 name="film_work_person_role",
             ),
