@@ -64,7 +64,7 @@ class FilmworkGenre(TimeIDMixin, models.Model):
     )
 
     class Meta:  # type: ignore
-        indexes = [
+        constraints  = [
             models.UniqueConstraint(fields=["filmwork_id", "genre_id"], name="film_work_genre"),
         ]
         verbose_name = _("Жанр фильма")
@@ -104,7 +104,7 @@ class PersonRole(TimeIDMixin, models.Model):
         verbose_name_plural = _("Роли и персоны")
         db_table = '"content"."person_film_work"'
 
-        indexes = [
+        constraints  = [
             models.UniqueConstraint(
                 fields=["filmwork_id", "person_id", "role"],
                 name="film_work_person_role",
